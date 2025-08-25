@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Bootstrap Website</title>
+  
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">Inter Process Comunication</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container-fluid px-5 my-5">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-12 col-md-6">
+        <h2 class="fs-4">
+            Click the process you want to use
+        </h2>
+        <div class="row">
+            <div class="d-flex justify-content-center align-items-center col-12 col-md-4">
+                <button id="btn-process-one" type="button" class="btn btn-primary btn-square disabled">
+                    process 1
+                </button>
+            </div>
+            <div class="d-flex justify-content-center align-items-center col-12 col-md-4">
+                <div class="d-flex flex-row flex-md-column">
+                    <!-- vertical arrows (mobile = row, desktop = column) -->
+                    <i id="arrowAB" class="bi bi-arrow-down mx-2 my-md-1"></i>
+                    <i id="arrowBA" class="bi bi-arrow-up mx-2 my-md-1"></i>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center col-12 col-md-4">
+                <button id="btn-process-two" type="button" class="btn btn-info btn-square disabled">
+                    process 2
+                </button>
+
+            </div>
+        </div>
+      </div>
+      
+      <!-- right column -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Sidebar</h5>
+            <p class="card-text">You can put extra info, links, or widgets here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+      <p class="mb-0">&copy; Thank you.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+          crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>

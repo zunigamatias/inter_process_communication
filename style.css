@@ -1,0 +1,16 @@
+.btn-square {
+    width: 8rem;
+    height: 8rem;
+}
+
+
+@media (min-width: 768px) {
+    .btn-square {
+        width: 8rem;
+        height: 8rem;
+    }
+}
+
+@media (min-width: 992px) {
+    
+}
