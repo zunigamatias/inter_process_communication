@@ -16,7 +16,6 @@
 </head>
 <body>
 
-  <!-- Header / Navbar -->
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
@@ -25,12 +24,12 @@
     </nav>
   </header>
 
-  <main class="container-fluid px-5 my-5">
+  <main class="container-fluid px-5 my-3">
     <div class="row">
       <!-- left column -->
       <div class="col-12 col-md-6 justify-content-center align-items-center">
         <h2 class="fs-4 text-center">
-            Click the process you want to use
+            Choose the process you want to use
         </h2>
         <div class="row">
             <div class="d-flex justify-content-center align-items-center col-12 col-md-4">
@@ -48,24 +47,70 @@
                 <button id="btnProcessTwo" type="button" class="btn btn-primary btn-square">
                     process 2
                 </button>
-
             </div>
+        </div>
+        <div class="row">
+          <div class="d-flex justify-content-center align-items-center" style="min-height: 5rem;">
+            <div class="col-12">
+              <p class="text-center mt-3 mb-0 fw-bold">Choose the communication method</p>
+              <select class="form-select mt-0" aria-label="communication method">
+                <option selected>anonymous pipes</option>
+                <option value="1">local sockets</option>
+              </select>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <form class="form-floating col-12 col-md-12">
+              <textarea 
+                class="form-control mt-1" 
+                placeholder="Leave a comment here" 
+                id="floatingTextarea2" 
+                style="height: 4rem"
+                required></textarea>
+              <label for="floatingTextarea2">Please write the message</label>
+              <div class="d-flex justify-content-center mt-3">
+                <button class="btn btn-primary" type="submit">Send message</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
       
       <!-- right column -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Sidebar</h5>
-            <p class="card-text">You can put extra info, links, or widgets here.</p>
-          </div>
-        </div>
+      <div class="col-12 col-md-6 justify-content-center align-items-center">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">index</th>
+              <th scope="col">sender</th>
+              <th scope="col">receiver</th>
+              <th scope="col">message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td colspan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="bg-dark text-white text-center py-3">
     <div class="container">
       <p class="mb-0">&copy; Thank you.</p>
