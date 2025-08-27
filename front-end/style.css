@@ -1,0 +1,36 @@
+.btn-active {
+  background-color: #2b1e76 !important; 
+  color: white !important;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.btn-square {
+    width: 8rem;
+    height: 8rem;
+}
+
+.arrow {
+    font-size: 2rem;
+    color: gray;
+    transition: color 0.3s, transform 0.3s;
+}
+.arrow-active {
+  color: red;
+}
+
+@media (min-width: 768px) {
+  #arrowP1P2 {
+    transform: rotate(-90deg);
+  }
+  #arrowP2P1 {
+    transform: rotate(-90deg); /* points right */
+  }
+    .btn-square {
+        width: 8rem;
+        height: 8rem;
+    }
+}
+
+@media (min-width: 992px) {
+    
+}
