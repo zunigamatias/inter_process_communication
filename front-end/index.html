@@ -68,7 +68,7 @@
                 style="height: 4rem"
                 required></textarea>
               <label for="floatingTextarea2">Please write the message</label>
-              <div class="d-flex justify-content-center mt-3">
+              <div class="d-flex justify-content-center my-3">
                 <button class="btn btn-primary" type="submit">Send message</button>
               </div>
             </form>
@@ -77,8 +77,8 @@
       </div>
       
       <!-- right column -->
-      <div class="col-12 col-md-6 justify-content-center align-items-center">
-        <table class="table">
+      <div class="col-12 col-md-6 align-items-center">
+        <table class="table logs-table">
           <thead>
             <tr>
               <th scope="col">index</th>
@@ -90,20 +90,15 @@
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td data-label="Sender:">Mark</td>  
+              <td data-label="Receiver:">Otto</td>
+              <td data-label="Message:">@mdo</td>
             </tr>
             <tr>
               <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
             </tr>
           </tbody>
         </table>

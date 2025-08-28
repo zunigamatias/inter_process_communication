@@ -18,6 +18,56 @@
   color: red;
 }
 
+.logs-table{
+  width: 100%;
+  border-collapse: collapse;
+}
+@media (max-width: 768px) {
+  .logs-table thead {
+    display: none; /* hide headers */
+  }
+
+  .logs-table,
+  .logs-table tbody,
+  .logs-table tr,
+  .logs-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .logs-table tr {
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    background: #407bab;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  .logs-table td {
+    display: flex;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-bottom: 1px solid #ffffff;
+  }
+
+  .logs-table td:last-child {
+    border-bottom: none;
+  }
+
+  .logs-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #495057;
+    flex-basis: 35%;
+    text-align: left;
+  }
+
+  .logs-table td {
+    flex-basis: 65%;
+    text-align: right;
+    color: #000000;
+  }
+}
 @media (min-width: 768px) {
   #arrowP1P2 {
     transform: rotate(-90deg);
