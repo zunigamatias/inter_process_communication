@@ -1,6 +1,10 @@
 #ifndef declaration
 #define declaration
 
-void communicate(int readFile, int writeFile);
+#include <string>
+
+
+void writeMessage(int processPipe[2], const char* msg);
+std::string readMessage(int processPipe[2]);
 
 #endif 

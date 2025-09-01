@@ -1,6 +1,5 @@
 #include "anonymous_pipes.h"
 
-#include <cstring>
 #include <fcntl.h>
 #include <iostream>
 #include <pthread.h>
@@ -10,7 +9,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-using namespace std;
 
 void writeMessage(int processPipe[2], const char* msg) {
     close(processPipe[0]);
@@ -18,13 +16,13 @@ void writeMessage(int processPipe[2], const char* msg) {
     close(processPipe[1]);
 }
 
-void readMessage(int processPipe[2]) {
+std::string readMessage(int processPipe[2]) {
     char buffer[100];
     close(processPipe[1]);
     read(processPipe[0], buffer, sizeof(buffer));
     close(processPipe[0]);
 
-    cout << "Sent: " << buffer << endl;
+    return std::string(buffer);
 }
 
 int main(int argc, char const *argv[])
@@ -43,7 +41,8 @@ int main(int argc, char const *argv[])
     
     pid_t child2 = fork();
     if (child2 == 0) {
-        readMessage(pipeAB);
+        std::string some = readMessage(pipeAB);
+        std::cout << some << std::endl;
         exit(0);
     }
 
