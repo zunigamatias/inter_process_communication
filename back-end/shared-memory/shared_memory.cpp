@@ -90,8 +90,14 @@ void processRequest(SharedData* data, const std::string& responseText) {
 
 
 int main() {
-    
     auto backend = []() {
+        pid_t pid = fork();
+        if (pid == 0) {
+            SharedData* front_data = initSharedMemory();
+            std::cout << "front data: " << front_data->response << std::endl;
+
+            exit(0);
+        }
         SharedData* data = initSharedMemory();
         if (!data) return;
 
