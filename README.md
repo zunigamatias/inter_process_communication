@@ -5,7 +5,7 @@ The communication between backend and frontend will be made through shared memor
 ```c++
 Struct Request {
     uint id;
-    std::string body;
+    Body body;
     bool requestReady;
     bool responseReady;
 }
@@ -15,7 +15,7 @@ Struct Request {
 - #### id: represents the request id
 - #### body: a json like string that is parsed at read time, the json will have the following fields: 
 ```markdown
-body: {
+Body: {
     std::string mainProcess;
     endpoint: <sharedMemory, localSockets, anonymousPipes>
     message: <message sent>
