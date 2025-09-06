@@ -10,7 +10,7 @@ enum Endpoint {
     localSockets
 };
 
-struct Body {
+struct RequestBody {
     std::string mainProcess;
     Endpoint endpoint;
     std::string message;
@@ -23,9 +23,13 @@ struct Body {
 // responseReady will be True.
 struct Request {
     uint id;
-    Body body;
+    RequestBody body;
     bool requestReady;
     bool responseReady;
+};
+
+struct Response {
+    uint id;
 };
 
 #endif

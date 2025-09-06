@@ -38,6 +38,8 @@ int main(int argc, char const *argv[])
         std::cout << "Started backend" << std::endl;
         mkfifo(fifoPath, 0666);
         std::cout << "Started FIFO communication with frontend" << std::endl;
+        uint lastReqId = 0;
+        uint resId = 0;
 
         while (true) {
             std::string r = getRequest(fifoPath);
@@ -46,11 +48,14 @@ int main(int argc, char const *argv[])
                 exit(1);
             }
             Request req = deserializeRequest(r);
-            if (!req.requestReady) {
+            if (req.id == lastReqId) {
                 continue;
             }
-
+            lastReqId = req.id;
             Endpoint endpoint = req.body.endpoint;
+            std::string mainProcess;
+            std::string msg;
+
             switch (endpoint)
             {
             case sharedMemory:
@@ -58,7 +63,7 @@ int main(int argc, char const *argv[])
                 break;
             
             case anonymousPipes:
-                /* code */
+                communicate(mainProcess, msg);
                 break;
             
             case localSockets:
@@ -68,7 +73,7 @@ int main(int argc, char const *argv[])
             default:
                 break;
             }
-
+            resId++;
         }
     };
     backend();
