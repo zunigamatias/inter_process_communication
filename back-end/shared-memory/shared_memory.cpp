@@ -9,21 +9,10 @@
 #include <sys/stat.h> // For mode constants
 #include <unistd.h>   // For ftruncate, fork, sleep
 
+#include <shared_memory.h>
+
 const char* memory_path = "/data";
 
-// here i'm setting requestready and responseReady: 
-// when a request is sent from the front-end, 
-// requestReady will be True.
-// when the response is sent from the back-end,
-// responseReady will be True.
-struct SharedData {
-    pthread_mutex_t lock;
-    pthread_cond_t cond;   // Condition variable for signaling
-    bool requestReady;
-    bool responseReady;
-    char request[256];
-    char response[256];
-};
 SharedData* initSharedMemory() {
     const size_t SIZE = sizeof(SharedData);
     
@@ -33,14 +22,13 @@ SharedData* initSharedMemory() {
             perror("shm_open");
             return nullptr;
         }
-        
+
     // the size of shared memory created by shm_open is zero. 
     // ftruncate sets the size of the shared memory
     if (ftruncate(shmFileDescriptor, SIZE) == -1) {
             perror("ftruncate");
             return nullptr;
         }
-        
     // maps a kernel address space to a user address space
     // the shared memory is created in kernel virtual memory 
     // and each process maps the same memory location to its own memory space
