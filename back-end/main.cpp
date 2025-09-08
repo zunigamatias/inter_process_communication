@@ -41,6 +41,7 @@ int main(int argc, char const *argv[])
         uint lastReqId = 0;
         uint resId = 0;
 
+
         while (true) {
             std::string r = getRequest(fifoPath);
             if (r == "err") {
@@ -53,6 +54,7 @@ int main(int argc, char const *argv[])
             }
             lastReqId = req.id;
             Endpoint endpoint = req.body.endpoint;
+            std::string sender = req.body.mainProcess;
             std::string mainProcess;
             std::string msg;
 
@@ -63,7 +65,17 @@ int main(int argc, char const *argv[])
                 break;
             
             case anonymousPipes:
-                communicate(mainProcess, msg);
+                initSharedMemory();
+                if (sender == "A") {
+                    communicateAtoB(mainProcess, msg);
+
+                }
+                else if (sender == "B") {
+                    communicateBtoA(mainProcess, msg);
+                }
+                else {
+                    perror("Unknown sender");
+                }
                 break;
             
             case localSockets:
