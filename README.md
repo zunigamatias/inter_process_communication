@@ -25,3 +25,12 @@ Explanation of each field:
 - #### mainProcess: says what is the process that is going to send the message
 - #### endpoint: Communication method between processes
 - #### message: Message set by the user
+
+# Tests
+Running tests for the different communication methods
+
+## Shared memory:
+```
+g++ -pthread back-end/shared-memory/shared_memory.cpp tests/test_shared_memory.cpp -lgtest -lgtest_main -o tests/test_shared_memory.out
+./tests/test_shared_memory.out
+```

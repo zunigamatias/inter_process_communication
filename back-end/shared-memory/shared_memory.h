@@ -2,20 +2,40 @@
 #define shared_memory
 
 #include <pthread.h>
+#include <string>
 
-// here i'm setting requestready and responseReady: 
-// when a request is sent from the front-end, 
-// requestReady will be True.
-// when the response is sent from the back-end,
-// responseReady will be True.
+// struct that contains the msg sent
+// and a mutex to safety communication
 struct SharedData {
     pthread_mutex_t lock;
-    pthread_cond_t cond;   // Condition variable for signaling
-    bool requestReady;
-    bool responseReady;
-    char request[256];
-    char response[256];
+    char msg[256];
 };
+
+// struct that contains the return msg, 
+// which should be the same as the sent msg
+// and a extra, that can contain anything useful
+// related to the process status
+struct ReturnMsg {
+    std::string msg;
+    std::string extra;
+};
+
+// Sets the data that is being read with the message
+// that the user set in the frontend, it locks and unlocks the mutex
+// to ensure safety between the shared memory
+void sendData(SharedData* data, const std::string& msg);
+
+// Returns the message in the shared struct
+std::string readData(SharedData* data);
+
+// Gets the status of the shared memory
+std::string getSharedMemoryStatus(SharedData* data);
+
+// Sends message from the parent process to the child process
+ReturnMsg communicateAtoB(std::string msg);
+
+// Sends message from the child process to the parent process
+ReturnMsg communicateBtoA(std::string msg);
 
 SharedData* initSharedMemory();
 
