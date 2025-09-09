@@ -5,16 +5,17 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "../anonymous-pipes/anonymous_pipes.h"
-#include "../local-sockets/local_sockets.h"
-#include "../shared-memory/shared_memory.h"
+#include "anonymous-pipes/anonymous_pipes.h"
+#include "main.h"
+#include "local-sockets/local_sockets.h"
+#include "shared-memory/shared_memory.h"
 #include "../integration/request.h"
 #include "../integration/response.h"
 
 using json = nlohmann::json;
 
-char* fifoPathReq = "/tmp/fifo_req";
-char* fifoPathRes = "tmp/fifo_res";
+const char* fifoPathReq = "/tmp/fifo_req";
+const char* fifoPathRes = "tmp/fifo_res";
 
 inline std::string serializeResponse(const Response& res) {
     json j;
@@ -28,7 +29,7 @@ inline Request deserializeRequest(const std::string& s) {
     return { j["id"], j["message"] };
 }
 
-std::string getRequest(char* path) {    
+std::string getRequest(const char* path) {    
     int fd = open(path, O_RDONLY);
     char buffer[256] = {0};
     size_t err = read(fd, buffer, sizeof(buffer));
@@ -41,7 +42,7 @@ std::string getRequest(char* path) {
     return std::string(buffer);
 }
 
-void sendResponse(const std::string& s, char* path) {
+void sendResponse(const std::string& s, const char* path) {
     int fd = open(path, O_WRONLY);
     if (fd == -1) {
         perror("open FIFO for write");
@@ -67,6 +68,12 @@ int main(int argc, char const *argv[])
                 exit(1);
             }
             Request req = deserializeRequest(r);
+
+            if (req.endCommunication) {
+                std::cout << "Finishing communication, closing program" <<std::endl;
+                exit(0);
+            }
+
             Endpoint endpoint = req.body.endpoint;
             std::string sender = req.body.mainProcess;
             std::string msg = req.body.message;
@@ -74,7 +81,7 @@ int main(int argc, char const *argv[])
 
             switch (endpoint)
             {
-            case sharedMemory:
+            case sharedMemory: {
                 SharedData* sharedData = initSharedMemory();
                 if (sender == "A") {
                     res = shmCommunicateAtoB(msg);
@@ -86,8 +93,8 @@ int main(int argc, char const *argv[])
                     perror("Unknown sender");
                 }
                 break;
-            
-            case anonymousPipes:
+            }
+            case anonymousPipes: {
                 std::array<int, 2> pipeAB = initAnonymousPipes();
                 std::array<int, 2> pipeBA = initAnonymousPipes();
                 if (sender == "A") {
@@ -100,8 +107,8 @@ int main(int argc, char const *argv[])
                     perror("Unknown sender");
                 }
                 break;
-            
-            case localSockets:
+            }
+            case localSockets: {
                 std::array<int, 2> socketPair = initSocketPair();
                 if (sender == "A") {
                     res = lsCommunicateAtoB(socketPair, msg);
@@ -113,7 +120,7 @@ int main(int argc, char const *argv[])
                     perror("Unknown sender");
                 }
                 break;
-            
+            }
             default:
                 break;
             }

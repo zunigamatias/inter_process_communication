@@ -25,6 +25,7 @@ struct Request {
     RequestBody body;
     bool requestReady;
     bool responseReady;
+    bool endCommunication;
 };
 
 #endif
