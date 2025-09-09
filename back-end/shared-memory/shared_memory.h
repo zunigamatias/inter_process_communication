@@ -15,7 +15,7 @@ struct SharedData {
 // which should be the same as the sent msg
 // and a extra, that can contain anything useful
 // related to the process status
-struct ReturnMsg {
+struct Response {
     std::string msg;
     std::string extra;
 };
@@ -32,10 +32,10 @@ std::string readData(SharedData* data);
 std::string getSharedMemoryStatus(SharedData* data);
 
 // Sends message from the parent process to the child process
-ReturnMsg communicateAtoB(std::string msg);
+Response communicateAtoB(std::string msg);
 
 // Sends message from the child process to the parent process
-ReturnMsg communicateBtoA(std::string msg);
+Response communicateBtoA(std::string msg);
 
 SharedData* initSharedMemory();
 

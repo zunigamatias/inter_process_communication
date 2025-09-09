@@ -109,9 +109,9 @@ std::string getSharedMemoryStatus(SharedData* data) {
     return statusMsg;
 }
 
-ReturnMsg communicateAtoB(std::string msg) {
+Response communicateAtoB(std::string msg) {
     SharedData* data = initSharedMemory();
-    if (!data) return ReturnMsg{};
+    if (!data) return Response{};
 
     sendData(data, msg);
 
@@ -126,16 +126,16 @@ ReturnMsg communicateAtoB(std::string msg) {
     wait(NULL);
     std::string sentData = readData(data);
     std::string status = getSharedMemoryStatus(data);
-    return ReturnMsg{
+    return Response{
         sentData,
         status
     };
 }
 
-ReturnMsg communicateBtoA(std::string msg) {
+Response communicateBtoA(std::string msg) {
     std::string sentData;
     SharedData* data = initSharedMemory();
-    if (!data) return ReturnMsg{}; 
+    if (!data) return Response{}; 
 
     //creates a child process
     pid_t pid = fork();
@@ -148,34 +148,10 @@ ReturnMsg communicateBtoA(std::string msg) {
         wait(NULL);
         sentData = readData(data);
         std::string status = getSharedMemoryStatus(data);
-        return ReturnMsg{
+        return Response{
             sentData,
             status
         };
     }
-    return ReturnMsg{};
+    return Response{};
 }
-
-
-// int main(int argc, char const *argv[])
-// {
-//     std::string some = "message";
-
-//     ReturnMsg ret1;
-//     ReturnMsg ret2;
-
-//     ret1 = communicateAtoB(some);
-//     ret2 = communicateBtoA(some);
-    
-//     std::cout << "msg: " << ret1.msg << ", extra: " << ret1.extra << std::endl;
-//     std::cout << "msg: " << ret2.msg << ", extra: " << ret2.extra << std::endl;
-//     ret1 = communicateAtoB(some);
-//     ret2 = communicateBtoA(some);
-//     std::cout << "msg: " << ret1.msg << ", extra: " << ret1.extra << std::endl;
-//     std::cout << "msg: " << ret2.msg << ", extra: " << ret2.extra << std::endl;
-//     ret1 = communicateAtoB(some);
-//     ret2 = communicateBtoA(some);
-//     std::cout << "msg: " << ret1.msg << ", extra: " << ret1.extra << std::endl;
-//     std::cout << "msg: " << ret2.msg << ", extra: " << ret2.extra << std::endl;
-//     return 0;
-// }

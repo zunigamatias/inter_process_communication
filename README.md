@@ -3,13 +3,21 @@
 
 The communication between backend and frontend will be made through shared memory. Here is what the shared object will look like:
 ```c++
-Struct Request {
+struct Request {
     uint id;
     std::string body;
     bool requestReady;
     bool responseReady;
 }
 ```
+The response from the backend will look like this: 
+```c++
+struct Response {
+    std::string msg;
+    std::string extra;
+};
+```
+
 
 ## Explanation of each field: 
 - #### id: represents the request id
