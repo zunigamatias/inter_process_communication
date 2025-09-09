@@ -1,0 +1,3 @@
+/home/tiasz/inter_process_communication/back-end/build/CMakeFiles/backend.dir
+/home/tiasz/inter_process_communication/back-end/build/CMakeFiles/edit_cache.dir
+/home/tiasz/inter_process_communication/back-end/build/CMakeFiles/rebuild_cache.dir
