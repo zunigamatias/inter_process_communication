@@ -4,20 +4,13 @@
 #include <pthread.h>
 #include <string>
 
+#include "../../integration/response.h"
+
 // struct that contains the msg sent
 // and a mutex to safety communication
 struct SharedData {
     pthread_mutex_t lock;
     char msg[256];
-};
-
-// struct that contains the return msg, 
-// which should be the same as the sent msg
-// and a extra, that can contain anything useful
-// related to the process status
-struct Response {
-    std::string msg;
-    std::string extra;
 };
 
 // Sets the data that is being read with the message
