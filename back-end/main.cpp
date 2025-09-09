@@ -32,15 +32,15 @@ inline Request deserializeRequest(const std::string& s) {
     RequestBody body;
     body.mainProcess = j["message"]["mainProcess"].get<std::string>();
     std::string endpointStr = j["message"]["endpoint"].get<std::string>();
-    if (endpointStr == "sharedMemory") body.endpoint = sharedMemory;
-    else if (endpointStr == "anonymousPipes") body.endpoint = anonymousPipes;
-    else if (endpointStr == "localSockets") body.endpoint = localSockets;
+    if (endpointStr == "shared memory") body.endpoint = sharedMemory;
+    else if (endpointStr == "anonymous pipes") body.endpoint = anonymousPipes;
+    else if (endpointStr == "local sockets") body.endpoint = localSockets;
 
     body.message = j["message"]["message"].get<std::string>();
 
     Request req;
     req.body = body;
-    req.requestReady = false; // or set as needed
+    req.requestReady = false;
     req.responseReady = true;
     req.endCommunication = j["endCommunication"].get<bool>();
     req.body.endpointString = endpointStr;

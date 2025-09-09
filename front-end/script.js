@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const endpoint = selectEndpoint ? selectEndpoint.value : "anonymousPipes";
+    const endpoint = selectEndpoint ? selectEndpoint.value : "anonymous pipes";
     const messageText = textarea.value.trim();
     if (!messageText) return; // nothing to send
 

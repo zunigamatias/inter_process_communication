@@ -65,7 +65,7 @@ Response apCommunicateAtoB(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA,
 
         return Response {
             finalMsg,
-            std::to_string(bytesWritten)
+            "Bytes written by A: " + std::to_string(bytesWritten)
         };
     }
 }
@@ -101,7 +101,7 @@ Response apCommunicateBtoA(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA,
 
         return Response {
             finalMsg,
-            std::to_string(bytesWritten)
+            "Bytes written by B: " + std::to_string(bytesWritten)
         };
     }
 }
