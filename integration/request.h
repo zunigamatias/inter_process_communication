@@ -22,7 +22,6 @@ struct RequestBody {
 // when the response is sent from the back-end,
 // responseReady will be True.
 struct Request {
-    uint id;
     RequestBody body;
     bool requestReady;
     bool responseReady;

@@ -5,22 +5,30 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "main.h"
 #include "../anonymous-pipes/anonymous_pipes.h"
 #include "../local-sockets/local_sockets.h"
 #include "../shared-memory/shared_memory.h"
+#include "../integration/request.h"
+#include "../integration/response.h"
 
 using json = nlohmann::json;
 
-char* fifoPath = "/tmp/fifo";
+char* fifoPathReq = "/tmp/fifo_req";
+char* fifoPathRes = "tmp/fifo_res";
 
+inline std::string serializeResponse(const Response& res) {
+    json j;
+    j["msg"] = res.msg;
+    j["extra"] = res.extra;
+    return j.dump();
+}
 
 inline Request deserializeRequest(const std::string& s) {
     auto j = json::parse(s);
     return { j["id"], j["message"] };
 }
 
-std::string getRequest(char* path) {
+std::string getRequest(char* path) {    
     int fd = open(path, O_RDONLY);
     char buffer[256] = {0};
     size_t err = read(fd, buffer, sizeof(buffer));
@@ -33,47 +41,60 @@ std::string getRequest(char* path) {
     return std::string(buffer);
 }
 
+void sendResponse(const std::string& s, char* path) {
+    int fd = open(path, O_WRONLY);
+    if (fd == -1) {
+        perror("open FIFO for write");
+        return;
+    }
+    write(fd, s.c_str(), s.size() + 1); // include null terminator
+    close(fd);
+}
+
 
 int main(int argc, char const *argv[])
 {
     auto backend = []() {
         std::cout << "Started backend" << std::endl;
-        mkfifo(fifoPath, 0666);
+        mkfifo(fifoPathReq, 0666);
+        mkfifo(fifoPathRes, 0666);
         std::cout << "Started FIFO communication with frontend" << std::endl;
-        uint lastReqId = 0;
-        uint resId = 0;
-
 
         while (true) {
-            std::string r = getRequest(fifoPath);
+            std::string r = getRequest(fifoPathReq);
             if (r == "err") {
                 std::cout << "Error reading request, closing communication";
                 exit(1);
             }
             Request req = deserializeRequest(r);
-            if (req.id == lastReqId) {
-                continue;
-            }
-            lastReqId = req.id;
             Endpoint endpoint = req.body.endpoint;
             std::string sender = req.body.mainProcess;
-            std::string mainProcess;
-            std::string msg;
+            std::string msg = req.body.message;
+            Response res;
 
             switch (endpoint)
             {
             case sharedMemory:
-                
+                SharedData* sharedData = initSharedMemory();
+                if (sender == "A") {
+                    res = shmCommunicateAtoB(msg);
+                }
+                else if (sender == "B") {
+                    res = shmCommunicateBtoA(msg);
+                }
+                else {
+                    perror("Unknown sender");
+                }
                 break;
             
             case anonymousPipes:
-                initSharedMemory();
+                std::array<int, 2> pipeAB = initAnonymousPipes();
+                std::array<int, 2> pipeBA = initAnonymousPipes();
                 if (sender == "A") {
-                    communicateAtoB(mainProcess, msg);
-
+                    res = apCommunicateAtoB(pipeAB, pipeBA, msg);
                 }
                 else if (sender == "B") {
-                    shmCommunicateBtoA(mainProcess, msg);
+                    res = apCommunicateBtoA(pipeAB, pipeBA, msg);
                 }
                 else {
                     perror("Unknown sender");
@@ -81,13 +102,23 @@ int main(int argc, char const *argv[])
                 break;
             
             case localSockets:
-                /* code */
+                std::array<int, 2> socketPair = initSocketPair();
+                if (sender == "A") {
+                    res = lsCommunicateAtoB(socketPair, msg);
+                }
+                else if (sender == "B") {
+                    res = lsCommunicateBtoA(socketPair, msg);
+                }
+                else {
+                    perror("Unknown sender");
+                }
                 break;
             
             default:
                 break;
             }
-            resId++;
+            std::string resStr = serializeResponse(res);
+            sendResponse(resStr, fifoPathRes);
         }
     };
     backend();

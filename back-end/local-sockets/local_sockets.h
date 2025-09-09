@@ -9,6 +9,4 @@ Response lsCommunicateAtoB(std::array<int, 2> sockets, std::string msg);
 
 Response lsCommunicateBtoA(std::array<int, 2> sockets, const std::string& msg);
 
-
-
 #endif
