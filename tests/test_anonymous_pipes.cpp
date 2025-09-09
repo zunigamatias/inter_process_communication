@@ -5,7 +5,7 @@
 
 // Test writeMessage and readMessage directly
 TEST(AnonymousPipesTest, WriteAndReadMessage) {
-    auto pipeFD = initializeAnonymousPipes();
+    auto pipeFD = initAnonymousPipes();
 
     const char* msg = "hello pipes";
 
@@ -24,7 +24,7 @@ TEST(AnonymousPipesTest, WriteAndReadMessage) {
 
 // Test that pipes are initialized correctly
 TEST(AnonymousPipesTest, InitializePipes) {
-    auto pipeFD = initializeAnonymousPipes();
+    auto pipeFD = initAnonymousPipes();
     EXPECT_GE(pipeFD[0], 0);
     EXPECT_GE(pipeFD[1], 0);
 
@@ -34,11 +34,11 @@ TEST(AnonymousPipesTest, InitializePipes) {
 
 // Test A->B communication
 TEST(AnonymousPipesTest, CommunicateAtoB) {
-    auto pipeAB = initializeAnonymousPipes();
-    auto pipeBA = initializeAnonymousPipes();
+    auto pipeAB = initAnonymousPipes();
+    auto pipeBA = initAnonymousPipes();
 
     std::string msg = "from A to B";
-    Response res = communicateAtoB(pipeAB, pipeBA, msg);
+    Response res = apCommunicateAtoB(pipeAB, pipeBA, msg);
 
     EXPECT_EQ(res.msg, msg);
     EXPECT_EQ(std::stoi(res.extra), msg.size() + 1); // includes '\0'
@@ -46,11 +46,11 @@ TEST(AnonymousPipesTest, CommunicateAtoB) {
 
 // Test B->A communication
 TEST(AnonymousPipesTest, CommunicateBtoA) {
-    auto pipeAB = initializeAnonymousPipes();
-    auto pipeBA = initializeAnonymousPipes();
+    auto pipeAB = initAnonymousPipes();
+    auto pipeBA = initAnonymousPipes();
 
     std::string msg = "from B to A";
-    Response res = communicateBtoA(pipeAB, pipeBA, msg);
+    Response res = apCommunicateBtoA(pipeAB, pipeBA, msg);
 
     EXPECT_EQ(res.msg, msg);
     EXPECT_EQ(std::stoi(res.extra), msg.size() + 1); // includes '\0'

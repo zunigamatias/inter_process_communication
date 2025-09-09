@@ -7,7 +7,7 @@
 #include "local_sockets.h"
 
 // 1. Initialize local socket pair
-std::array<int, 2> initializeSocketPair() {
+std::array<int, 2> initSocketPair() {
     std::array<int, 2> sockets;
     if (socketpair(AF_UNIX, SOCK_STREAM, 0, sockets.data()) == -1) {
         perror("socketpair");
@@ -16,7 +16,7 @@ std::array<int, 2> initializeSocketPair() {
 }
 
 // 2. Communication Parent -> Child
-Response communicateAtoB(std::array<int, 2> sockets, std::string msg) {
+Response lsCommunicateAtoB(std::array<int, 2> sockets, std::string msg) {
     pid_t pid = fork();
     if (pid == 0) {
         // --- Child ---
@@ -48,7 +48,7 @@ Response communicateAtoB(std::array<int, 2> sockets, std::string msg) {
 }
 
 // 3. Communication Child -> Parent
-Response communicateBtoA(std::array<int, 2> sockets, const std::string& msg) {
+Response lsCommunicateBtoA(std::array<int, 2> sockets, const std::string& msg) {
     pid_t pid = fork();
     if (pid == -1) {
         perror("fork");

@@ -56,7 +56,7 @@ TEST_F(SharedMemoryTest, GetSharedMemoryStatus_ShowsUnlockedInitially) {
 
 TEST_F(SharedMemoryTest, CommunicateAtoB_TransfersMessage) {
     std::string msg = "message A to B";
-    Response result = communicateAtoB(msg);
+    Response result = shmCommunicateAtoB(msg);
 
     EXPECT_EQ(result.msg, msg);
     EXPECT_NE(result.extra, ""); // should contain mutex status
@@ -64,7 +64,7 @@ TEST_F(SharedMemoryTest, CommunicateAtoB_TransfersMessage) {
 
 TEST_F(SharedMemoryTest, CommunicateBtoA_TransfersMessage) {
     std::string msg = "message B to A";
-    Response result = communicateBtoA(msg);
+    Response result = shmCommunicateBtoA(msg);
 
     EXPECT_EQ(result.msg, msg);
     EXPECT_NE(result.extra, ""); // should contain mutex status
@@ -74,8 +74,8 @@ TEST_F(SharedMemoryTest, MultipleConsecutiveCommunications_WorkCorrectly) {
     std::string msg = "loop test";
 
     for (int i = 0; i < 3; i++) {
-        Response a = communicateAtoB(msg);
-        Response b = communicateBtoA(msg);
+        Response a = shmCommunicateAtoB(msg);
+        Response b = shmCommunicateBtoA(msg);
 
         EXPECT_EQ(a.msg, msg);
         EXPECT_EQ(b.msg, msg);

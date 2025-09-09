@@ -5,7 +5,7 @@
 
 // Test socket pair initialization
 TEST(LocalSocketsTest, InitializeSocketPair) {
-    auto sockets = initializeSocketPair();
+    auto sockets = initSocketPair();
     EXPECT_GE(sockets[0], 0);
     EXPECT_GE(sockets[1], 0);
 
@@ -15,10 +15,10 @@ TEST(LocalSocketsTest, InitializeSocketPair) {
 
 // Test Parent -> Child communication
 TEST(LocalSocketsTest, ParentToChild) {
-    auto sockets = initializeSocketPair();
+    auto sockets = initSocketPair();
     std::string msg = "Message from Parent";
 
-    Response res = communicateAtoB(sockets, msg);
+    Response res = lsCommunicateAtoB(sockets, msg);
 
     EXPECT_EQ(res.msg, msg);
     EXPECT_GE(std::stoi(res.extra), msg.size()); // bytes written >= message size
@@ -26,10 +26,10 @@ TEST(LocalSocketsTest, ParentToChild) {
 
 // Test Child -> Parent communication
 TEST(LocalSocketsTest, ChildToParent) {
-    auto sockets = initializeSocketPair();
+    auto sockets = initSocketPair();
     std::string msg = "Message from Child";
 
-    Response res = communicateBtoA(sockets, msg);
+    Response res = lsCommunicateBtoA(sockets, msg);
 
     EXPECT_EQ(res.msg, msg);
 

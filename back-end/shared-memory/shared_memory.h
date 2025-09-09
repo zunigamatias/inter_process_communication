@@ -25,10 +25,10 @@ std::string readData(SharedData* data);
 std::string getSharedMemoryStatus(SharedData* data);
 
 // Sends message from the parent process to the child process
-Response communicateAtoB(std::string msg);
+Response shmCommunicateAtoB(std::string msg);
 
 // Sends message from the child process to the parent process
-Response communicateBtoA(std::string msg);
+Response shmCommunicateBtoA(std::string msg);
 
 SharedData* initSharedMemory();
 
