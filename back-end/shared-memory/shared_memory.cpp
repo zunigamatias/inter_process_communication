@@ -57,7 +57,7 @@ SharedData* initSharedMemory() {
         pthread_mutexattr_t attr;
         // initialize the mutex with default attributes
         pthread_mutexattr_init(&attr);
-        // sets the mutex to be shared between processes,
+        // sets the mutex to be shared between processes, 
         // allow the mutex to be placed in the shared memory
         pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED);
         // Initializes the mutex
