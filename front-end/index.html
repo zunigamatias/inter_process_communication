@@ -14,24 +14,24 @@
 
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">Inter Process Comunication</a>
-      </div>
-    </nav>
-  </header>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2">
+        <div class="container">
+          <a class="navbar-brand" href="#">Inter Process Comunication</a>
+        </div>
+      </nav>
+    </header>
 
   <main class="container-fluid px-5 my-3">
     <div class="row">
       <!-- left column -->
       <div class="col-12 col-md-6 justify-content-center align-items-center">
-        <h2 class="fs-4 text-center">
+        <h2 class="fs-4 fw-bold text-center spacing">
             Choose the process you want to use
         </h2>
-        <div class="row">
+        <div class="row spacing">
             <div class="d-flex justify-content-center align-items-center col-12 col-md-4">
                 <button id="btnProcessOne" type="button" class="btn btn-primary btn-square">
                     process 1
@@ -49,10 +49,10 @@
                 </button>
             </div>
         </div>
-        <div class="row">
+        <div class="row spacing">
           <div class="d-flex justify-content-center align-items-center" style="min-height: 5rem;">
             <div class="col-12">
-              <p class="text-center mt-3 mb-0 fw-bold">Choose the communication method</p>
+              <p class="text-center mt-5 mb-0 fs-4 fw-bold">Choose the communication method</p>
               <select class="form-select mt-0" aria-label="communication method">
                 <option selected>anonymous pipes</option>
                 <option value="1">local sockets</option>
@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="d-flex justify-content-center">
-            <form class="form-floating col-12 col-md-12">
+            <form class="form-floating col-12">
               <textarea 
                 class="form-control mt-1" 
                 placeholder="Leave a comment here" 
@@ -68,8 +68,8 @@
                 style="height: 4rem"
                 required></textarea>
               <label for="floatingTextarea2">Please write the message</label>
-              <div class="d-flex justify-content-center mt-3">
-                <button class="btn btn-primary" type="submit">Send message</button>
+              <div class="d-flex justify-content-center my-3">
+                <button class="btn btn-primary btn-send fs-6" type="submit">Send message</button>
               </div>
             </form>
           </div>
@@ -77,33 +77,124 @@
       </div>
       
       <!-- right column -->
-      <div class="col-12 col-md-6 justify-content-center align-items-center">
-        <table class="table">
+      <div class="table-responsive col-12 col-md-6 align-items-center text-center" style="max-height: 80vh; overflow-y: auto;">
+        <table class="table logs-table table-hover">
           <thead>
             <tr>
-              <th scope="col">index</th>
-              <th scope="col">sender</th>
-              <th scope="col">receiver</th>
-              <th scope="col">message</th>
+              <th style="width: 10%;" scope="col">index</th>
+              <th style="width: 15%;" scope="col">sender</th>
+              <th style="width: 15%;" scope="col">receiver</th>
+              <th style="width: 60%;" scope="col">message</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td data-label="Sender:">Mark</td>  
+              <td data-label="Receiver:">Otto</td>
+              <td data-label="Message:">@mdo</td>
             </tr>
             <tr>
               <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
             </tr>
             <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td data-label="Sender:">Jacob</td>
+              <td data-label="Receiver:">Thornton</td>
+              <td data-label="Message:">@fat</td>
             </tr>
           </tbody>
         </table>
@@ -111,7 +202,7 @@
     </div>
   </main>
 
-  <footer class="bg-dark text-white text-center py-3">
+  <footer class="bg-dark text-white text-center py-2 mt-auto">
     <div class="container">
       <p class="mb-0">&copy; Thank you.</p>
     </div>

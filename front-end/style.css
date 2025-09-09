@@ -5,8 +5,8 @@
 }
 
 .btn-square {
-    width: 8rem;
-    height: 8rem;
+    width: 9rem;
+    height: 9rem;
 }
 
 .arrow {
@@ -15,10 +15,68 @@
     transition: color 0.3s, transform 0.3s;
 }
 .arrow-active {
-  color: red;
+  color: rgb(255, 0, 0);
 }
 
+.logs-table{
+  width: 100%;
+  border-collapse: collapse;
+}
+@media (max-width: 768px) {
+  .logs-table thead {
+    display: none; /* hide headers */
+  }
+
+  .logs-table,
+  .logs-table tbody,
+  .logs-table tr,
+  .logs-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .logs-table tr {
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    background: #407bab;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  .logs-table td {
+    display: flex;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-bottom: 1px solid #ffffff;
+  }
+
+  .logs-table td:last-child {
+    border-bottom: none;
+  }
+
+  .logs-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #f7f7f7;
+    flex-basis: 35%;
+    text-align: left;
+  }
+
+  .logs-table td {
+    flex-basis: 65%;
+    text-align: right;
+    color: #000000;
+  }
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
 @media (min-width: 768px) {
+  .spacing {
+    margin-top: 3vh;
+  }
   #arrowP1P2 {
     transform: rotate(-90deg);
   }
@@ -26,8 +84,12 @@
     transform: rotate(-90deg); /* points right */
   }
     .btn-square {
-        width: 8rem;
-        height: 8rem;
+        width: 9rem;
+        height: 9rem;
+    }
+    .btn-send {
+      width: 20vh;
+      height: 8vh;
     }
 }
 
