@@ -109,7 +109,7 @@ std::string getSharedMemoryStatus(SharedData* data) {
     return statusMsg;
 }
 
-Response communicateAtoB(std::string msg) {
+Response shmCommunicateAtoB(std::string msg) {
     SharedData* data = initSharedMemory();
     if (!data) return Response{};
 
@@ -132,7 +132,7 @@ Response communicateAtoB(std::string msg) {
     };
 }
 
-Response communicateBtoA(std::string msg) {
+Response shmCommunicateBtoA(std::string msg) {
     std::string sentData;
     SharedData* data = initSharedMemory();
     if (!data) return Response{}; 

@@ -8,10 +8,10 @@ ssize_t writeMessage(int fd, const char* msg);
 
 std::pair<std::string, std::string> readMessage(int fd);
 
-std::array<int, 2> initializeAnonymousPipes();
+std::array<int, 2> initAnonymousPipes();
 
-Response communicateAtoB(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, std::string msg);
+Response apCommunicateAtoB(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, std::string msg);
 
-Response communicateBtoA(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, std::string msg);
+Response apCommunicateBtoA(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, std::string msg);
 
 #endif 

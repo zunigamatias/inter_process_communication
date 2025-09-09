@@ -3,11 +3,11 @@
 
 #include "../../integration/response.h"
 
-std::array<int, 2> initializeSocketPair();
+std::array<int, 2> initSocketPair();
 
-Response communicateAtoB(std::array<int, 2> sockets, std::string msg);
+Response lsCommunicateAtoB(std::array<int, 2> sockets, std::string msg);
 
-Response communicateBtoA(std::array<int, 2> sockets, const std::string& msg);
+Response lsCommunicateBtoA(std::array<int, 2> sockets, const std::string& msg);
 
 
 

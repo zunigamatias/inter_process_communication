@@ -5,8 +5,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <shared_memory.h>
-#include <main.h>
+#include "main.h"
+#include "../anonymous-pipes/anonymous_pipes.h"
+#include "../local-sockets/local_sockets.h"
+#include "../shared-memory/shared_memory.h"
 
 using json = nlohmann::json;
 
@@ -71,7 +73,7 @@ int main(int argc, char const *argv[])
 
                 }
                 else if (sender == "B") {
-                    communicateBtoA(mainProcess, msg);
+                    shmCommunicateBtoA(mainProcess, msg);
                 }
                 else {
                     perror("Unknown sender");

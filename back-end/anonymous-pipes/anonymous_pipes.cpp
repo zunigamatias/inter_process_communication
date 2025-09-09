@@ -28,7 +28,7 @@ std::pair<std::string, std::string> readMessage(int fd) {
 }
 
 // creates and returns the pipes
-std::array<int, 2> initializeAnonymousPipes() {
+std::array<int, 2> initAnonymousPipes() {
     std::array<int, 2> pipeFD;
     if (pipe(pipeFD.data()) == -1) {
         perror("pipe");
@@ -37,7 +37,7 @@ std::array<int, 2> initializeAnonymousPipes() {
 }
 
 // sets the communication between parent to child
-Response communicateAtoB(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, std::string msg) {
+Response apCommunicateAtoB(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, std::string msg) {
     pid_t pid = fork();
     if (pid == 0) {
         // Child: B reads from pipeAB, writes to pipeBA
@@ -71,7 +71,7 @@ Response communicateAtoB(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, s
 }
 
 
-Response communicateBtoA(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, std::string msg) {
+Response apCommunicateBtoA(std::array<int, 2> pipeAB, std::array<int, 2> pipeBA, std::string msg) {
     pid_t pid = fork();
     // --- Child process ---
     if (pid == 0) {
