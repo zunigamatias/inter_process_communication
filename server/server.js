@@ -7,8 +7,17 @@ const app = express();
 app.use(bodyParser.json());
 
 // allow frontend (localhost:5500) to talk to backend (localhost:3000)
+const allowedOrigins = ["http://localhost:5500", "http://127.0.0.1:5500"];
+
 app.use(cors({
-  origin: "http://localhost:5500"
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true); // allow non-browser requests (like curl)
+    if(allowedOrigins.includes(origin)){
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  }
 }));
 
 const fifoReq = "/tmp/fifo_req";
@@ -24,6 +33,7 @@ app.post("/send", (req, res) => {
   // read response from backend
   const response = fs.readFileSync(fifoRes, "utf-8").trim();
   res.json(JSON.parse(response));
+  console.log(response)
 });
 
 app.listen(3000, () => {

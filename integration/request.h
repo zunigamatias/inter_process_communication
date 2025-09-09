@@ -14,6 +14,7 @@ struct RequestBody {
     std::string mainProcess;
     Endpoint endpoint;
     std::string message;
+    std::string endpointString;
 };
 
 // here i'm setting requestready and responseReady: 

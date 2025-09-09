@@ -85,20 +85,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const senderCell = document.createElement("td");
       senderCell.dataset.label = "Sender:";
-      senderCell.textContent = mainProcess;
+      senderCell.textContent = data.sender;
 
       const receiverCell = document.createElement("td");
-      receiverCell.dataset.label = "Receiver:";
-      receiverCell.textContent = "Backend";
+      receiverCell.dataset.label = "Method:";
+      receiverCell.textContent = data.communicationMethod;
 
       const messageCell = document.createElement("td");
       messageCell.dataset.label = "Message:";
       messageCell.textContent = data.msg ?? "(no msg)";
 
+      const infoCell = document.createElement("td");
+      infoCell.dataset.label = "Info:";
+      infoCell.textContent = data.extra;
+
       row.appendChild(indexCell);
       row.appendChild(senderCell);
       row.appendChild(receiverCell);
       row.appendChild(messageCell);
+      row.appendChild(infoCell);
       tableBody.appendChild(row);
 
       // clear textarea

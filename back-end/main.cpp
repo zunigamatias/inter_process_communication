@@ -21,6 +21,8 @@ inline std::string serializeResponse(const Response& res) {
     json j;
     j["msg"] = res.msg;
     j["extra"] = res.extra;
+    j["communicationMethod"] = res.communicationMethod;
+    j["sender"] = res.sender;
     return j.dump();
 }
 
@@ -41,6 +43,7 @@ inline Request deserializeRequest(const std::string& s) {
     req.requestReady = false; // or set as needed
     req.responseReady = true;
     req.endCommunication = j["endCommunication"].get<bool>();
+    req.body.endpointString = endpointStr;
 
     return req;
 }
@@ -104,6 +107,7 @@ int main(int argc, char const *argv[])
             }
 
             Endpoint endpoint = req.body.endpoint;
+            std::string endpointStr = req.body.endpointString;
             std::string sender = req.body.mainProcess;
             std::string msg = req.body.message;
             Response res;
@@ -153,8 +157,15 @@ int main(int argc, char const *argv[])
             default:
                 break;
             }
+            //setting the endpoint and sender 
+            res.communicationMethod = endpointStr;
+            res.sender = sender;
+
             std::cout << "Response message: " << res.msg << std::endl;
             std::cout << "Response extra: " << res.extra << std::endl;
+            std::cout << "Sender: " << res.sender << std::endl;
+            std::cout << "Endpoint: " << res.communicationMethod << std::endl;
+
             std::string resStr = serializeResponse(res);
             sendResponse(resStr, fifoPathRes);
             std::cout << "Response succesfully sent" << std::endl;
