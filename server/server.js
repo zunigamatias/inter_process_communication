@@ -22,7 +22,7 @@ app.post("/send", (req, res) => {
   fs.writeFileSync(fifoReq, request + "\n");
 
   // read response from backend
-  const response = fs.readFileSync(fifoRes, "utf-8");
+  const response = fs.readFileSync(fifoRes, "utf-8").trim();
   res.json(JSON.parse(response));
 });
 
