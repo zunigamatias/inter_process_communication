@@ -15,18 +15,37 @@
 using json = nlohmann::json;
 
 const char* fifoPathReq = "/tmp/fifo_req";
-const char* fifoPathRes = "tmp/fifo_res";
+const char* fifoPathRes = "/tmp/fifo_res";
 
 inline std::string serializeResponse(const Response& res) {
     json j;
     j["msg"] = res.msg;
     j["extra"] = res.extra;
+    j["communicationMethod"] = res.communicationMethod;
+    j["sender"] = res.sender;
     return j.dump();
 }
 
 inline Request deserializeRequest(const std::string& s) {
     auto j = json::parse(s);
-    return { j["id"], j["message"] };
+
+    RequestBody body;
+    body.mainProcess = j["message"]["mainProcess"].get<std::string>();
+    std::string endpointStr = j["message"]["endpoint"].get<std::string>();
+    if (endpointStr == "shared memory") body.endpoint = sharedMemory;
+    else if (endpointStr == "anonymous pipes") body.endpoint = anonymousPipes;
+    else if (endpointStr == "local sockets") body.endpoint = localSockets;
+
+    body.message = j["message"]["message"].get<std::string>();
+
+    Request req;
+    req.body = body;
+    req.requestReady = false;
+    req.responseReady = true;
+    req.endCommunication = j["endCommunication"].get<bool>();
+    req.body.endpointString = endpointStr;
+
+    return req;
 }
 
 std::string getRequest(const char* path) {    
@@ -43,12 +62,25 @@ std::string getRequest(const char* path) {
 }
 
 void sendResponse(const std::string& s, const char* path) {
+    // Check if FIFO exists, create if not
+    if (access(path, F_OK) == -1) {
+        if (mkfifo(path, 0666) == -1) {
+            perror("mkfifo failed");
+            return;
+        }
+    }
+
     int fd = open(path, O_WRONLY);
     if (fd == -1) {
         perror("open FIFO for write");
         return;
     }
-    write(fd, s.c_str(), s.size() + 1); // include null terminator
+
+    ssize_t bytesWritten = write(fd, s.c_str(), s.size()); // include null terminator
+    if (bytesWritten == -1) {
+        perror("write failed");
+    }
+    std::cout << "Response sent" << std::endl;
     close(fd);
 }
 
@@ -75,10 +107,11 @@ int main(int argc, char const *argv[])
             }
 
             Endpoint endpoint = req.body.endpoint;
+            std::string endpointStr = req.body.endpointString;
             std::string sender = req.body.mainProcess;
             std::string msg = req.body.message;
             Response res;
-
+            std::cout << "Endpoint: " << endpoint << std::endl;
             switch (endpoint)
             {
             case sharedMemory: {
@@ -124,8 +157,18 @@ int main(int argc, char const *argv[])
             default:
                 break;
             }
+            //setting the endpoint and sender 
+            res.communicationMethod = endpointStr;
+            res.sender = sender;
+
+            std::cout << "Response message: " << res.msg << std::endl;
+            std::cout << "Response extra: " << res.extra << std::endl;
+            std::cout << "Sender: " << res.sender << std::endl;
+            std::cout << "Endpoint: " << res.communicationMethod << std::endl;
+
             std::string resStr = serializeResponse(res);
             sendResponse(resStr, fifoPathRes);
+            std::cout << "Response succesfully sent" << std::endl;
         }
     };
     backend();

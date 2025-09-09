@@ -43,7 +43,10 @@ Response lsCommunicateAtoB(std::array<int, 2> sockets, std::string msg) {
         wait(NULL);
         close(sockets[0]);
 
-        return Response{std::string(buffer), std::to_string(bytesWritten)};
+        return Response{
+            std::string(buffer), 
+            "Bytes written by A: " + std::to_string(bytesWritten)
+        };
     }
 }
 
@@ -88,6 +91,9 @@ Response lsCommunicateBtoA(std::array<int, 2> sockets, const std::string& msg) {
 
         waitpid(pid, nullptr, 0);
         close(sockets[0]);
-        return {out, "bytes=" + std::to_string(out.size())};
+        return Response{
+            out, 
+            "Bytes written by B: " + std::to_string(out.size())
+        };
     }
 }

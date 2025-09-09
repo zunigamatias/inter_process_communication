@@ -10,6 +10,8 @@
 struct Response {
     std::string msg;
     std::string extra;
+    std::string communicationMethod;
+    std::string sender;
 };
 
 #endif

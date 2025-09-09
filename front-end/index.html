@@ -53,10 +53,10 @@
           <div class="d-flex justify-content-center align-items-center" style="min-height: 5rem;">
             <div class="col-12">
               <p class="text-center mt-5 mb-0 fs-4 fw-bold">Choose the communication method</p>
-              <select class="form-select mt-0" aria-label="communication method">
-                <option selected>anonymous pipes</option>
-                <option value="1">local sockets</option>
-                <option value="2">shared memory</option>
+              <select id="selectEndpoint" class="form-select mt-0" aria-label="communication method">
+                <option value="anonymous pipes" selected>anonymous pipes</option>
+                <option value="local sockets">local sockets</option>
+                <option value="shared memory">shared memory</option>
               </select>
             </div>
           </div>
@@ -82,120 +82,20 @@
         <table class="table logs-table table-hover">
           <thead>
             <tr>
-              <th style="width: 10%;" scope="col">index</th>
-              <th style="width: 15%;" scope="col">sender</th>
-              <th style="width: 15%;" scope="col">receiver</th>
-              <th style="width: 60%;" scope="col">message</th>
+              <th style="width: 10%;" scope="col">Index</th>
+              <th style="width: 10%;" scope="col">Sender</th>
+              <th style="width: 20%;" scope="col">Method</th>
+              <th style="width: 35%;" scope="col">Message</th>
+              <th style="width: 25%;" scope="col">Info</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th scope="row">1</th>
               <td data-label="Sender:">Mark</td>  
-              <td data-label="Receiver:">Otto</td>
+              <td data-label="Method:">Otto</td>
               <td data-label="Message:">@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td data-label="Sender:">Jacob</td>
-              <td data-label="Receiver:">Thornton</td>
-              <td data-label="Message:">@fat</td>
+              <td data-label="Info:">info</td>
             </tr>
           </tbody>
         </table>
