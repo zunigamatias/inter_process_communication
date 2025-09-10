@@ -1,68 +1,92 @@
 # inter_process_communication
 
+The project demonstrates **inter-process communication (IPC)** between a **C++ backend** and a **Node.js bridge/frontend**.  
+The communication between backend and frontend is done through **FIFOs**, and the backend supports multiple IPC mechanisms.  
 
-The communication between backend and frontend will be made through shared memory. Here is what the shared object will look like:
+---
+
+# ⚙️ Build & Run Instructions
+## To run the program, type this om the root of the repository: 
+```
+./run.sh
+```
+
+## 🧪 Tests
+
+Unit tests use GoogleTest (gtest).
+
+Run all tests with:
+```
+./run_tests.sh
+```
+
+---
+# 📦 Request/Response Structures
+
+## Request Structures
+
+### `RequestBody`
+```c++
+struct RequestBody {
+    std::string mainProcess;
+    Endpoint endpoint;
+    std::string message;
+    std::string endpointString;
+};
+```
+### Field explanations:
+
+- mainProcess → Indicates which process is sending the message. For example, "A" or "B".
+
+- endpoint → Enum indicating the communication method to use:
+
+- sharedMemory → Use shared memory for IPC
+
+- anonymousPipes → Use anonymous pipes for IPC
+
+- localSockets → Use local (UNIX) sockets for IPC
+
+- message → The actual content of the message sent by the process.
+
+- endpointString → Optional string representation of the endpoint, useful for logging or JSON serialization.
+
+### `Request`
 ```c++
 struct Request {
-    uint id;
-    Body body;
+    RequestBody body;
     bool requestReady;
     bool responseReady;
-}
+    bool endCommunication;
+};
+
 ```
-The response from the backend will look like this: 
+
+### Field explanations:
+
+- body → The RequestBody struct containing the main message and metadata.
+
+- requestReady → Flag indicating that a request has been sent from the frontend and is ready to be processed by the backend.
+
+- responseReady → Flag indicating that the backend has processed the request and the response is ready to be read.
+
+- endCommunication → Flag to indicate that the communication session should be terminated (e.g., shutting down the backend or ending IPC).
+
+## Response Structure
+### `Response`
 ```c++
 struct Response {
     std::string msg;
     std::string extra;
+    std::string communicationMethod;
+    std::string sender;
 };
 ```
+### Field explanations:
 
+- msg → The main message returned by the backend, usually echoing or processing the original request.
 
-## Explanation of each field: 
-- #### id: represents the request id
-- #### body: a json like string that is parsed at read time, the json will have the following fields: 
-```markdown
-Body: {
-    std::string mainProcess;
-    endpoint: <sharedMemory, localSockets, anonymousPipes>
-    message: <message sent>
-}
-```
-Explanation of each field: 
-- #### mainProcess: says what is the process that is going to send the message
-- #### endpoint: Communication method between processes
-- #### message: Message set by the user
+- extra → Any additional information or metadata, such as debug info, status messages, or processing results.
 
-# Tests
-Running tests for the different communication methods
+- communicationMethod → A string indicating which IPC method was actually used to send the response (e.g., "sharedMemory", "localSockets", "anonymousPipes").
 
-## Shared memory:
-```
-g++ -pthread back-end/shared-memory/shared_memory.cpp tests/test_shared_memory.cpp -lgtest -lgtest_main -o tests/test_shared_memory.out
-./tests/test_shared_memory.out
-```
-
-## Local sockets: 
-```
-g++ -pthread back-end/local-sockets/local_sockets.cpp tests/test_local_sockets.cpp -lgtest -lgtest_main -o tests/test_local_sockets.out
-./tests/test_local_sockets.out
-```
-
-## Anonoymous pipes:
-```
-g++ -pthread back-end/anonymous-pipes/anonymous_pipes.cpp tests/test_anonymous_pipes.cpp -lgtest -lgtest_main -o tests/test_anonymous_pipes.out
-./tests/test_anonymous_pipes.out
-```
-
-## Integration:
-```
-g++ -pthread \
-    back-end/main.cpp \
-    back-end/shared-memory/shared_memory.cpp \
-    back-end/anonymous-pipes/anonymous_pipes.cpp \
-    back-end/local-sockets/local_sockets.cpp \
-    tests/test_backend_main.cpp \
-    -lgtest -lgtest_main -o tests/test_mainfile.out
-./tests/test_mainfile.out
-```
+- sender → The process that generated the response (e.g., "A" or "B")
