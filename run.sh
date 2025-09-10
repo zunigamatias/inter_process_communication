@@ -2,6 +2,9 @@
 set -e  # Exit on first error
 trap "exit" INT  # Exit cleanly on Ctrl+C
 
+# closing possible live server 
+pkill -f "http.server"
+
 # Go to backend folder and build
 echo "🔧 Building backend..."
 cd back-end
