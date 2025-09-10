@@ -3,7 +3,8 @@ set -e  # Exit on first error
 trap "exit" INT  # Exit cleanly on Ctrl+C
 
 # closing possible live server 
-pkill -f "http.server"
+echo "🛑 Stopping any existing frontend server..."
+pkill -f "python3 -m http.server" || true
 
 # Go to backend folder and build
 echo "🔧 Building backend..."
