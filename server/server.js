@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // allow frontend (localhost:5500) to talk to backend (localhost:3000)
-const allowedOrigins = ["http://localhost:5500", "http://127.0.0.1:5500"];
+const allowedOrigins = ["http://localhost:8000", "http://127.0.0.1:8000"];
 
 app.use(cors({
   origin: function(origin, callback){

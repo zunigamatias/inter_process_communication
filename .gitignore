@@ -43,3 +43,5 @@
 .env
 
 node_modules
+
+back-end/build/

@@ -21,10 +21,18 @@ TEST(LocalSocketsTest, ParentToChild) {
     Response res = lsCommunicateAtoB(sockets, msg);
 
     EXPECT_EQ(res.msg, msg);
-    EXPECT_GE(std::stoi(res.extra), msg.size()); // bytes written >= message size
+
+    // extract number after ':'
+    size_t colonPos = res.extra.find(':');
+    ASSERT_NE(colonPos, std::string::npos) << "res.extra format unexpected: " << res.extra;
+
+    int bytes = std::stoi(res.extra.substr(colonPos + 1));
+    EXPECT_GE(bytes, msg.size());
+
+    close(sockets[0]);
+    close(sockets[1]);
 }
 
-// Test Child -> Parent communication
 TEST(LocalSocketsTest, ChildToParent) {
     auto sockets = initSocketPair();
     std::string msg = "Message from Child";
@@ -33,10 +41,12 @@ TEST(LocalSocketsTest, ChildToParent) {
 
     EXPECT_EQ(res.msg, msg);
 
-    // extract numeric value from "bytes=16"
-    size_t eqPos = res.extra.find('=');
-    ASSERT_NE(eqPos, std::string::npos);
-    int bytes = std::stoi(res.extra.substr(eqPos + 1));
+    size_t colonPos = res.extra.find(':');
+    ASSERT_NE(colonPos, std::string::npos) << "res.extra format unexpected: " << res.extra;
 
-    EXPECT_EQ(bytes, msg.size()); // only message length, no null terminator
+    int bytes = std::stoi(res.extra.substr(colonPos + 1));
+    EXPECT_EQ(bytes, msg.size());
+
+    close(sockets[0]);
+    close(sockets[1]);
 }

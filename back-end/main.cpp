@@ -100,7 +100,6 @@ int main(int argc, char const *argv[])
                 exit(1);
             }
             Request req = deserializeRequest(r);
-
             if (req.endCommunication) {
                 std::cout << "Finishing communication, closing program" <<std::endl;
                 exit(0);
@@ -110,8 +109,8 @@ int main(int argc, char const *argv[])
             std::string endpointStr = req.body.endpointString;
             std::string sender = req.body.mainProcess;
             std::string msg = req.body.message;
+
             Response res;
-            std::cout << "Endpoint: " << endpoint << std::endl;
             switch (endpoint)
             {
             case sharedMemory: {
@@ -155,8 +154,8 @@ int main(int argc, char const *argv[])
                 break;
             }
             default:
-                break;
-            }
+            break;
+        }
             //setting the endpoint and sender 
             res.communicationMethod = endpointStr;
             res.sender = sender;
