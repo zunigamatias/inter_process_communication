@@ -6,10 +6,12 @@ The communication between backend and frontend is done through **FIFOs**, and th
 ---
 
 # ⚙️ Build & Run Instructions
-## To run the program, type this om the root of the repository: 
+## To run the program, type this in the root of the repository: 
 ```
+chmod +x run.sh
 ./run.sh
 ```
+- ### After that open `localhost:8000` in your browser 
 
 ## 🧪 Tests
 
@@ -17,6 +19,7 @@ Unit tests use GoogleTest (gtest).
 
 Run all tests with:
 ```
+chmod +x run_tests.sh
 ./run_tests.sh
 ```
 
