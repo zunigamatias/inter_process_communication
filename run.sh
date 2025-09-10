@@ -1,35 +1,42 @@
 #!/bin/bash
-set -e  # stop on first error
+set -e  # Exit on first error
+trap "exit" INT  # Exit cleanly on Ctrl+C
 
-# Go to backend folder
+# Go to backend folder and build
+echo "🔧 Building backend..."
 cd back-end
 
-# Create build folder if not exists
 mkdir -p build
 cd build
 
-# Run cmake & compile
 cmake ..
-make -j$(nproc)
-
+make -j"$(nproc)"
 echo "✅ Backend compiled successfully."
 
 # Run backend in background
 ./backend &
 BACKEND_PID=$!
+echo "🧠 Backend running (PID: $BACKEND_PID)"
 
-# Go back to server folder
-cd ../../server
+# Start frontend
+echo "🌐 Starting frontend server..."
+cd ../../front-end
+python3 -m http.server &
+FRONTEND_PID=$!
 
-# Install dependencies if not installed yet
+# Start Node.js server
+echo "📦 Preparing Node.js server..."
+cd ../server
+
 if [ ! -d "node_modules" ]; then
   echo "📦 Installing Node.js dependencies..."
   npm install
 fi
 
-# Run Node server
 echo "🚀 Starting Node.js server..."
 npm start &
+NODE_PID=$!
 
-# Save both PIDs and wait
-wait $BACKEND_PID
+# Wait for backend, frontend, and node
+echo "⏳ Servers running..."
+wait $BACKEND_PID $FRONTEND_PID $NODE_PID
